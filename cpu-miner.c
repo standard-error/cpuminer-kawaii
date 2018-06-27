@@ -98,6 +98,7 @@ enum algos {
 	ALGO_DROP,        /* Dropcoin */
 	ALGO_FRESH,       /* Fresh */
 	ALGO_GROESTL,     /* Groestl */
+	ALGO_HMQ1725,	  /* HMQ1725 */
 	ALGO_JHA,
 	ALGO_LBRY,        /* Lbry Sha Ripemd */
 	ALGO_LUFFA,       /* Luffa (Joincoin, Doom) */
@@ -147,7 +148,7 @@ static const char *algo_names[] = {
 	"quark",
 	"allium",
 	"axiom",
-	        "balloon",
+	"balloon",
 	"bastion",
 	"blake",
 	"blakecoin",
@@ -161,6 +162,7 @@ static const char *algo_names[] = {
 	"drop",
 	"fresh",
 	"groestl",
+	"hmq1725",
 	"jha",
 	"lbry",
 	"luffa",
@@ -327,6 +329,7 @@ Options:\n\
                           fresh        Fresh\n\
                           groestl      GroestlCoin\n\
                           heavy        Heavy\n\
+                          hmq1725      HMQ1725\n\
                           jha          JHA\n\
                           keccak       Keccak (Old and deprecated)\n\
                           keccakc      Keccak (CreativeCoin)\n\
@@ -1859,6 +1862,7 @@ static void stratum_gen_work(struct stratum_ctx *sctx, struct work *work)
 			case ALGO_NEOSCRYPT:
 			case ALGO_PLUCK:
 			case ALGO_YESCRYPT:
+			case ALGO_HMQ1725:
 				// 확인 *65536.0 if (opt_showdiff)
 				work_set_target(work, sctx->job.diff / (65536.0 * opt_diff_factor));
 				break;
@@ -2319,6 +2323,9 @@ static void *miner_thread(void *userdata)
 			break;
 		case ALGO_HEAVY:
 			rc = scanhash_heavy(thr_id, &work, max_nonce, &hashes_done);
+			break;
+                case ALGO_HMQ1725:
+			rc = scanhash_hmq1725(thr_id, &work, max_nonce, &hashes_done);
 			break;
 		case ALGO_JHA:
 			rc = scanhash_jha(thr_id, &work, max_nonce, &hashes_done);

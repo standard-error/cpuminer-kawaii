@@ -71,6 +71,7 @@ cpuminer_SOURCES = \
   algo/fresh.c \
   algo/groestl.c \
   algo/heavy.c \
+  algo/hmq1725.c \
   algo/ink.c \
   algo/jha.c \
   algo/lbry.c \

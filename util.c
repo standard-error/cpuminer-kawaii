@@ -2358,6 +2358,9 @@ void print_hash_tests(void)
 	heavyhash((uint8_t*) &hash[0], (uint8_t*) &buf[0], 32);
 	printpfx("heavy", hash);
 
+	hmq1725hash(&hash[0], &buf[0]);
+	printpfx("hmq1725", hash);
+
 	keccakhash(&hash[0], &buf[0]);
 	printpfx("keccak", hash);
 
